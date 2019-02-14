@@ -16,22 +16,28 @@ function ifMultipleOrSum(a, b) {
 
 // 2. Условные операторы. Определить какой четверти принадлежит точка с координатами (х,у)
 
-function ifPointSectionDecart (x, y) {
+function getPointSectionDecart (x, y) {
 
+    let quartam = 0;
     if (x == 0 || y == 0) {
-        console.log((x == 0 && y == 0) ? 'Центр координат' : 'ось ' + ((x == 0 ? 'Y' : 'X')));
-        document.write((x == 0 && y == 0) ? 'Центр координат' : 'ось ' + ((x == 0 ? 'Y' : 'X')));
+        return((x == 0 && y == 0) ? 'Coordinate center' : 'axis ' + ((x == 0 ? 'Y' : 'X')));
     }
 
     else {
-        let horizontal = (x > 0 ? [1, 2] : [3, 4]);
-        let vertical = (y > 0 ? [1, 4] : [2, 3]);
-        horizontal.forEach(el => {
-            if (vertical.includes(el)) {
-                console.log(el + ' четверть');
-            }
-        });
+        if (x > 0 && y > 0){
+            quartam = 1;
+        }
+        if (x < 0 && y > 0){
+            quartam = 2;
+        }
+        if (x < 0 && y < 0){
+            quartam = 3;
+        }
+        if (x > 0 && y < 0){
+            quartam = 4;
+        }
     }
+    return quartam + ' quarter';
 }
 
 // 3. Условные операторы. Найти суммы только положительных из трех чисел
@@ -54,17 +60,15 @@ function ifSumPositiveOfNumber (a, b, c) {
 
 // 4. Условные операторы. Посчитать выражение макс(а*б*с, а+б+с)+3
 
-function ifMaxExpression (a, b, c) {
+function getMaxExpression (a, b, c) {
 
     if (a * b * c >= a + b + c) {
-        var rez = a * b * c + 3;
-        console.log(rez);
-        return rez;
+        var result = a * b * c + 3;
+        return result;
     }
     else {
-        var rez = (a + b + c) + 3;
-        console.log(rez);
-        return rez;
+        var result = (a + b + c) + 3;
+        return result;
     }
 }
 
@@ -120,24 +124,22 @@ function sumOfEvenNumber1_99 () {
 
 // 2. Циклы. Проверить простое ли число? (число называется простым, если оно делится только само на себя и на 1)
 
-function checkNumberOfSimple (x) {
-
-    if (x < 2) {
-        console.log('Введенное число ' + x + ' составное!');
-        return;
-    }
-
-    var q = Math.floor(Math.sqrt(x));
-
-    for (var i = 2; i <= q; i++) {
-        if (x % i == 0) {
-            console.log('Введенное число ' + x + ' составное!');
-            return;
+function checkPrimeNumber(n){
+    let prost = true;
+    for (let i = 2; i <= n / 2; i++)
+    {
+        if (n % i == 0)
+        {
+            prost = false;
+            break;
         }
     }
-
-    console.log('Введенное число ' + x + ' простое!');
-
+    if (prost){
+        return `${n} is prime number`;
+    }
+    else{
+        return `${n} is composite number`;
+    }
 }
 
 // 3. Циклы.Найти корень натурального числа с точностью до целого (рассмотреть вариант последовательного подбора и
@@ -171,13 +173,8 @@ function sqrtBinSearch (a) {
 
 // 4. Циклы. Вычислить факториал числа n. n! = 1*2*…*n-1*n;!
 
-function calcFactorial (n) {
-
-    function factorial(n) {
-        return (n != 1) ? n * factorial(n - 1) : 1;
-    }
-
-    console.log('Факториал числа ' + n + ' равен: ' + factorial(n));
+function getFactorial(n) {
+    return (n != 1) ? n * getFactorial(n - 1) : 1;
 }
 
 // 5. Циклы.Посчитать сумму цифр заданного числа
@@ -197,14 +194,14 @@ function calcSumOfNumber (num) {
 /* 6. Циклы. Вывести число, которое является зеркальным отображением последовательности цифр заданного числа,
  например, задано число 123, вывести 321. */
 
-function logReverseOfNumber(number) {
+ function getReverseNumber(number) {
 
     number = number.toString();
     var reverse = '';
     for (var i = number.length - 1; i >= 0; i--) {
         reverse += number.charAt(i);
     }
-    console.log(reverse);
+    return reverse;
 }
 
 // 1. Одномерные массивы. Найти минимальный элемент массива
@@ -238,26 +235,21 @@ function minElemOfMas (mas) {
 
 // 2. Одномерные массивы. Найти максимальный элемент массива
 
-function maxElemOfMas (masLenght) {
+function getMaxArrayElement(arr){
+    let max = arr[0];
+    for(let i = 0; i < arr.length; ++i)
+    {
+        if(arr[i] > max)
+        {
+            max = arr[i];
+        }
 
-    var mas = [];
-    var iterator = masLenght - 1;
-    var maxEl;
-    var minEl;
-
-    for (i = 0; i <= iterator; i++) {
-        var el = +prompt('Enter number: ', '');
-        mas[i] = el;
     }
-
-    minEl = mas[0];
-    maxEl = minEl;
-    for (i = 0; i < mas.length; ++i) {
-        if (mas[i] > maxEl) maxEl = mas[i];
-        if (mas[i] < minEl) minEl = mas[i];
+    if(max === void 0) {
+        return null;
     }
+    return max;
 
-    console.log('Максимальный элемент массива - ' + mas + ' ==> ' + maxEl);
 }
 
 // 3. Одномерные массивы. Найти индекс минимального элемента массива
@@ -285,21 +277,21 @@ function minIndexOfMas (mas) {
 
 // 4. Одномерные массивы. Найти индекс максимального элемента массива
 
-function maxIndexOfMas (masLenght) {
-
-    var mas = [];
-    var iterator = masLenght - 1;
-    var maxEl;
-    var minEl;
-
-    for (i = 0; i <= iterator; i++) {
-        var el = +prompt('Enter number: ', '');
-        mas[i] = el;
+function getMaxArrayElementIndex(arr){
+    let max = arr[0];
+    let maxIndex = 0;
+    for(let i = 0; i < arr.length; ++i)
+    {
+        if(arr[i] > max)
+        {
+            max = arr[i];
+            maxIndex = i;
+        }
     }
-
-    var max = Math.max.apply(null, mas);
-
-    console.log('Индекс максимального элемента массива -  ' + mas + ' ==> ' + mas.indexOf(max));
+    if(max === void 0) {
+        return null;
+    }
+    return maxIndex;
 }
 
 // 5. Одномерные массивы. Посчитать сумму элементов массива с нечетными индексами
@@ -323,17 +315,16 @@ function calcSumElemOddOfMas (mas) {
 }
 
 // 6. Одномерные массивы. Сделать реверс массива (массив в обратном направлении)
+function getReverseArray(arr) {
+    revArr = [];
+    var j = 0;
 
-function reverseOfMas (masLenght) {
-    var mas = [];
-    var iterator = masLenght - 1;
-
-    for (i = 0; i <= iterator; i++) {
-        var el = +prompt('Enter number: ', '');
-        mas[i] = el;
+    for(let i = arr.length-1; i >= 0; i-- ) {
+        revArr[j] = arr[i];
+        j++;
     }
 
-    console.log('Реверс массива -  ' + mas + ' ==> ' + mas.reverse());
+    return revArr;
 }
 
 // 7. Одномерные массивы. Посчитать количество нечетных элементов массива.
@@ -360,41 +351,34 @@ function quantityOddElemOfMas (mas) {
 // 8. Одномерные массивы. Поменять местами первую и вторую половину массива, например, для массива 1 2 3 4,
 // результат 3 4 1 2
 
-function replacePartsOfMas (masLenght) {
+function getReplaceArrayParts (arr) {
 
-    var mas = [];
-    var mas1 = [];
-    var mas2 = [];
-    var masRez = [];
+    this.arr = arr;
+    var firstArrPart = [];
+    var secondArrPart = [];
+    var resultedArr = [];
 
-    var iterator = masLenght - 1;
-
-    for (i = 0; i <= iterator; i++) {
-        var el = +prompt('Enter number: ', '');
-        mas[i] = el;
+    for (i = 0; i < arr.length / 2; i++) {
+        firstArrPart[i] = arr[i];
     }
 
-    for (i = 0; i < mas.length / 2; i++) {
-        mas1[i] = mas[i];
-    }
+    var masL = Math.floor(arr.length / 2);
 
-    var masL = Math.floor(mas.length / 2);
+    if (arr.length % 2 == 0) {
+        for (i = masL, j = 0; i < arr.length; i++, j++) {
 
-    if (mas.length % 2 == 0) {
-        for (i = masL, j = 0; i < mas.length; i++, j++) {
-
-            mas2[j] = mas[i];
+            secondArrPart[j] = arr[i];
         }
     } else {
-        for (i = masL + 1, j = 0; i < mas.length; i++, j++) {
+        for (i = masL + 1, j = 0; i < arr.length; i++, j++) {
 
-            mas2[j] = mas[i];
+            secondArrPart[j] = arr[i];
         }
     }
 
-    masRez = [...mas2, ...mas1];
+    resultedArr = [...secondArrPart, ...firstArrPart];
 
-    console.log('Замена местами половин массива -  ' + masRez + ' ==> ' + mas);
+    return resultedArr;
 }
 
 
@@ -467,9 +451,9 @@ function insertionSorted (arr) {
 }
 
 // 10. Одномерные массивы. Отсортировать массив (Quick, Merge, Shell, Heap)
-
 // quick
 
+// Quick
 function quickSorted (arr, left = 0, right = arr.length - 1) {
     let len = arr.length,
         index;
@@ -489,60 +473,38 @@ function quickSorted (arr, left = 0, right = arr.length - 1) {
     }
     return arr;
 
-}
+    function partition(arr, left, right) {
+        let middle = Math.floor((right + left) / 2),
+            pivot = arr[middle],
+            i = left,
+            j = right;
 
-function partition(arr, left, right) {
-    let middle = Math.floor((right + left) / 2),
-        pivot = arr[middle],
-        i = left,
-        j = right;
-
-    while (i <= j) {
+        while (i <= j) {
 
 
-        while (arr[i] < pivot) {
-            i++;
+            while (arr[i] < pivot) {
+                i++;
+            }
+
+
+            while (arr[j] > pivot) {
+                j--;
+            }
+
+
+            if (i <= j) {
+                [arr[i], arr[j]] = [arr[j], arr[i]];
+                i++;
+                j--;
+            }
         }
 
+        return i;
 
-        while (arr[j] > pivot) {
-            j--;
-        }
-
-
-        if (i <= j) {
-            [arr[i], arr[j]] = [arr[j], arr[i]];
-            i++;
-            j--;
-        }
     }
-
-    return i;
-
 }
 
 // Merge
-
-var unsortedArr = [340, 1, 3, 3, 76, 23, 4, 12, 122, 7642, 646];
-
-function merge(leftArr, rightArr) {
-    var sortedArr = [];
-    while (leftArr.length && rightArr.length) {
-        if (leftArr[0] <= rightArr[0]) {
-            sortedArr.push(leftArr[0]);
-            leftArr = leftArr.slice(1)
-        } else {
-            sortedArr.push(rightArr[0]);
-            rightArr = rightArr.slice(1)
-        }
-    }
-    while (leftArr.length)
-        sortedArr.push(leftArr.shift());
-    while (rightArr.length)
-        sortedArr.push(rightArr.shift());
-    return sortedArr;
-}
-
 function mergeSorted (arr) {
     if (arr.length < 2) {
         return arr;
@@ -553,11 +515,26 @@ function mergeSorted (arr) {
         var rightArr = arr.slice(midpoint, arr.length);
         return merge(mergeSorted(leftArr), mergeSorted(rightArr));
     }
+    function merge(leftArr, rightArr) {
+        var sortedArr = [];
+        while (leftArr.length && rightArr.length) {
+            if (leftArr[0] <= rightArr[0]) {
+                sortedArr.push(leftArr[0]);
+                leftArr = leftArr.slice(1)
+            } else {
+                sortedArr.push(rightArr[0]);
+                rightArr = rightArr.slice(1)
+            }
+        }
+        while (leftArr.length)
+            sortedArr.push(leftArr.shift());
+        while (rightArr.length)
+            sortedArr.push(rightArr.shift());
+        return sortedArr;
+    }
 }
 
-
 // Shell
-
 function shellSorted (arr) {
 
     var increment = arr.length / 2;
@@ -583,10 +560,22 @@ function shellSorted (arr) {
     return arr;
 }
 
-
-
 // Heap
-function heapSorted () {
+function heapSort(input) {
+
+    array_length = input.length;
+
+    for (var i = Math.floor(array_length / 2); i >= 0; i -= 1) {
+        heap_root(input, i);
+    }
+
+    for (i = input.length - 1; i > 0; i--) {
+        swap(input, 0, i);
+        array_length--;
+
+
+        heap_root(input, 0);
+    }
 
     var array_length;
 
@@ -615,27 +604,6 @@ function heapSorted () {
         input[index_A] = input[index_B];
         input[index_B] = temp;
     }
-
-    function heapSort(input) {
-
-        array_length = input.length;
-
-        for (var i = Math.floor(array_length / 2); i >= 0; i -= 1) {
-            heap_root(input, i);
-        }
-
-        for (i = input.length - 1; i > 0; i--) {
-            swap(input, 0, i);
-            array_length--;
-
-
-            heap_root(input, 0);
-        }
-    }
-
-    heapSort(unsortedArr);
-    console.log(unsortedArr);
-
 }
 
 // 1. Функции. Получить строковое название дня недели по номеру дня.
@@ -669,15 +637,14 @@ function dayOfNumber (dayNumber) {
 
 // 2. Функции. Найти расстояние между двумя точками в двухмерном декартовом пространстве.
 
-function distOfPointDecart (x1, y1, x2, y2) {
+function getDistOfPointDecart (x1, y1, x2, y2) {
 
     var a = x1 - x2;
     var b = y1 - y2;
 
     var c = Math.sqrt(a * a + b * b);
 
-    console.log('Расстояние между точками: ' + c);
-
+    return Number(c.toFixed(2));
 }
 
 // 3. Функции. Вводим число(0-999), получаем строку с прописью числа. Для задания 1 расширить диапазон до 999 миллиардов
@@ -804,63 +771,61 @@ function numberToString (num) {
 }
 
 
-// 4. Функции. Вводим строку, которая содержит число, написанное прописью (0-999). Получить само число. Для задания 2 расширить диапазон до 999 миллиардов
+// 4. Функции. Вводим строку с прописью числа. число(0-999) получаем число(0-999). Для задания 1 расширить диапазон до 999 миллиардов
 
-
-function stringToNumbers(str) {
-
+function stringToNubers(str){
     var numbers = calculate();
 
-    function digitsSplit(writtenDigits) {
-        let arr = [];
+    function digitsSplit(writtenDigits){
+        let arr = new Array;
+        var parsArr = new Array;
+        var x = 0;
+        var flagNumberDigits = 0;
         arr = writtenDigits.split(" ");
-        for (var words = 0; words < arr.length; words++) {
-            arr[words] = arr[words].replace(/[^а-яА-Я]/g, "");
-        }
+        parsArr[0] = 0;
         var numbersDigits = ([["миллиард", "миллиарда", "миллиардов"],
             ["миллион", "миллиона", "миллионов"],
             ["тысяча", "тысячи", "тысяч"]]);
-        var parsArr = [];
-        var x = 0;
-        var flagNumberDigits = 0;
-        parsArr[0] = 0;
         for (let i = 0; i < arr.length; i++) {
-            for (let j = 0; j < 3; j++) {
-                for (let k = 0; k < 3; k++) {
-                    if (arr[i] === numbersDigits[j][k]) {
+            for(let j = 0; j < 3; j++){
+                for (let k = 0; k < 3; k++){
+                    if (arr[i] === numbersDigits[j][k]){
                         x++;
 
-                        if (arr[i] === numbersDigits[0][k]) {
+                        if (arr[i] === numbersDigits[0][k]){
                             flagNumberDigits = 1000000000;
                         }
-                        if (arr[i] === numbersDigits[1][k]) {
+                        if (arr[i] === numbersDigits[1][k]){
                             flagNumberDigits = 1000000;
                         }
-                        if (arr[i] === numbersDigits[2][k]) {
+                        if (arr[i] === numbersDigits[2][k]){
                             flagNumberDigits = 1000;
                         }
                         break;
                     }
                 }
             }
-            if (parsArr[x] == undefined) {
-                parsArr[x - 1] *= flagNumberDigits;
+            if (parsArr[x] == undefined)
+            {
+                parsArr[x-1] *= flagNumberDigits;
                 parsArr[x] = 0;
             }
             parsArr[x] += checkString(arr[i]);
+
         }
+
         return parsArr;
     }
 
-    function calculate(someArr = digitsSplit(str)) {
+    function calculate(someArr = digitsSplit(str)){
         let sum = 0;
         for (let i = 0; i < someArr.length; i++) {
-            sum += someArr[i];
+            sum+=someArr[i];
         }
         return sum;
     }
 
-    function checkString(digit) {
+    function checkString(digit){
         let sDig = singleDigits(digit);
         let dDig10to19 = doubleDigits_10to19(digit);
         let dDig = doubleDigits(digit);
@@ -880,9 +845,8 @@ function stringToNumbers(str) {
         else
             return 0;
     }
-
     //Единицы
-    function singleDigits(digit) {
+    function singleDigits(digit){
         switch (digit) {
             case ("один"):
                 return (1);
@@ -891,141 +855,138 @@ function stringToNumbers(str) {
                 return (1);
 
             case "два":
-                return (2);
+                return(2);
 
             case "две":
-                return (2);
+                return(2);
 
             case "три":
-                return (3);
+                return(3);
 
             case "четыре":
-                return (4);
+                return(4);
 
             case "пять":
-                return (5);
+                return(5);
 
             case "шесть":
-                return (6);
+                return(6);
 
             case "семь":
-                return (7);
+                return(7);
 
             case "восемь":
-                return (8);
+                return(8);
 
             case "девять":
-                return (9);
+                return(9);
 
             default:
                 return null;
         }
     }
-
     //Числа от 10 до 19
-    function doubleDigits_10to19(digit) {
+    function doubleDigits_10to19(digit){
         switch (digit) {
             case "десять":
-                return (10);
+                return(10);
 
             case "одинадцать":
-                return (11);
+                return(11);
 
             case "двенадцать":
-                return (12);
+                return(12);
 
             case "тринадцать":
-                return (13);
+                return(13);
 
             case "четырнадцать":
-                return (14);
+                return(14);
 
             case "пятнадцать":
-                return (15);
+                return(15);
 
             case "шестнадцать":
-                return (16);
+                return(16);
 
             case "семнадцать":
-                return (17);
+                return(17);
 
             case "восемнадцать":
-                return (18);
+                return(18);
 
             case "девятнадцать":
-                return (19);
+                return(19);
 
             default:
                 return null;
         }
     }
-
     //Числа от 20 до 90
-    function doubleDigits(digit) {
+    function doubleDigits(digit){
         switch (digit) {
             case "двадцать":
-                return (20);
+                return(20);
 
             case "тридцать":
-                return (30);
+                return(30);
 
             case "сорок":
-                return (40);
+                return(40);
 
             case "пятьдесят":
-                return (50);
+                return(50);
 
             case "шестьдесят":
-                return (60);
+                return(60);
 
             case "семьдесят":
-                return (70);
+                return(70);
 
             case "восемьдесят":
-                return (80);
+                return(80);
 
             case "девяносто":
-                return (90);
+                return(90);
 
             default:
                 return null;
         }
     }
-
     //Сотни
-    function hundredDigits(digit) {
+    function hundredDigits(digit){
         switch (digit) {
             case "сто":
-                return (100);
+                return(100);
 
             case "двести":
-                return (200);
+                return(200);
 
             case "триста":
-                return (300);
+                return(300);
 
             case "четыреста":
-                return (400);
+                return(400);
 
             case "пятьсот":
-                return (500);
+                return(500);
 
             case "шестьсот":
-                return (600);
+                return(600);
 
             case "семьсот":
-                return (700);
+                return(700);
 
             case "восемьсот":
-                return (800);
+                return(800);
 
             case "девятьсот":
-                return (900);
+                return(900);
 
             default:
                 return null;
         }
     }
-
     return numbers;
 }
+
